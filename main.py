@@ -25,7 +25,8 @@ def main():
                 return
             else:
                 await bot.send_message(chat_id = chatId, text = replyText)
-    print("Telegram Bot online")
-    asyncio.run(bot.infinity_polling())
+
+    print("Bot is online")
+    asyncio.run(bot.infinity_polling(True))
 
 main()
