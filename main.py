@@ -17,12 +17,12 @@ def main():
     async def send(msg):
         if msg.chat.type == "private" and msg.chat.type != "group":
             print("{0} {3} ({2}) sent a message: {1}".format(msg.from_user.first_name, msg.text, msg.chat.id, msg.from_user.last_name))
-            chatId = input("Who would you like to reply to (chat id): ")
+            # chatId = input("Who would you like to reply to (chat id): ")
             replyText = input("Your answer: ")
-            if replyText == "none":
+            if replyText == "none" or replyText == "None":
                 return
             else:
-                await bot.send_message(chat_id = chatId, text = replyText)
+                await bot.send_message(chat_id = msg.chat.id, text = replyText)
 
     print("Bot is online")
     asyncio.run(bot.infinity_polling(True))
