@@ -14,8 +14,8 @@ module.exports = (client) => {
     .readdirSync("./slashCommands/")
     .filter((file) => file.endsWith(".js"));
 
-  const clientId = "943483853593518130"
-  const guildId = "943350037952487485";
+  const clientId = client.user.id
+  // const guildId = "943350037952487485";
 
   for (const file of slashCmdFiles) {
     const command = require(`../slashCommands/${file}`);
@@ -31,7 +31,7 @@ module.exports = (client) => {
     try {
       console.log("[Main] Started refreshing application (/) commands.");
 
-      await rest.put(Routes.applicationCommands(clientId, guildId), { body: slashCmd });
+      await rest.put(Routes.applicationCommands(clientId), { body: slashCmd });
       // await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: slashCmd });
 
       console.log("[Main] Successfully reloaded application (/) commands.");
