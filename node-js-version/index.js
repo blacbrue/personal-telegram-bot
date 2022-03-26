@@ -41,20 +41,68 @@ client.on("ready", async () => {
         if (msg.chat.type === "group") return
 
         if (msg.chat.type === "private") {
-            const chatid = msg.chat.id
-            const message = msg.text
-            const messageid = msg.message_id
-            const name = `${msg.from.first_name} ${msg.from.last_name}`
+            if (msg.video) {
+                const fileID = msg.video.file_id
+                const chatid = msg.chat.id
+                const message = await bot.getFileLink(fileID)
+                const messageid = msg.message_id
+                const name = `${msg.from.first_name} ${msg.from.last_name}`
 
-            console.log(`${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a private message: ${message} (${messageid})`)
-            j.send({ content: `${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a private message: ${message} (${messageid})` })
+                console.log(`${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a video message: ${message} (${messageid})`)
+                j.send({
+                    content: `${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a video message: ${message} (${messageid})`
+                })
+            } else if (msg.location) {
+                const message = `Latitude: ${msg.location.latitude}, Longitude: ${msg.location.longitude}`
+                const chatid = msg.chat.id
+                const messageid = msg.message_id
+                const name = `${msg.from.first_name} ${msg.from.last_name}`
+
+                console.log(`${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a location: ${message} (${messageid})`)
+                j.send({
+                    content: `${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a location: ${message} (${messageid})`
+                })
+            } else if (msg.document) {
+                const fileID = msg.document.file_id
+                const message = await bot.getFileLink(fileID)
+                const messageid = msg.message_id
+                const name = `${msg.from.first_name} ${msg.from.last_name}`
+                const chatid = msg.chat.id
+
+                console.log(`${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a document: ${message} (${messageid})`)
+                j.send({
+                    content: `${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a document: ${message} (${messageid})`
+                })
+            } else if (msg.contact) {
+                const contact = msg.contact
+                const message = `Name: ${contact.first_name} ${contact.last_name}, Phone number: ${contact.phone_number}, User ID: ${contact.user_id}, VCard: ${contact.vcard}`
+                const messageid = msg.message_id
+                const name = `${msg.from.first_name} ${msg.from.last_name}`
+                const chatid = msg.chat.id
+
+                console.log(`${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a contact: ${message} (${messageid})`)
+                j.send({
+                    content: `${new Date().toLocaleString()} UTC ${getTimeZone()}: ${name} (${chatid}) sent a contact: ${message} (${messageid})`
+                })
+            } else {
+                const chatid = msg.chat.id
+                const message = msg.text
+                const messageid = msg.message_id
+                const name = `${msg.from.first_name} ${msg.from.last_name}`
+
+                console.log(`${new Date().toLocaleString("en-US", { timeZone: "Asia/Kuala_Lumpur" })}: ${name} (${chatid}) sent a private message: ${message} (${messageid})`)
+                j.send({
+                    content: `${new Date().toLocaleString("en-US", { timeZone: "Asia/Kuala_Lumpur" })}: ${name} (${chatid}) sent a private message: ${message} (${messageid})`
+                })
+            }
         } else return
     })
 
 })
 
 function getTimeZone() {
-    var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
+    var offset = new Date().getTimezoneOffset(),
+        o = Math.abs(offset);
     return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
 }
 
