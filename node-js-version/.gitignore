@@ -144,4 +144,6 @@ dist
 
 node_modules
 
+logs
+
 # End of https://www.toptal.com/developers/gitignore/api/node
