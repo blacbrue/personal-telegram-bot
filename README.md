@@ -6,6 +6,8 @@
 
 <p>Note: This bot has not been tested with other Python versions.</p>
 
+[Node.js Version](https://github.com/blacbrue/personal-telegram-bot/tree/main/node-js-version)
+
 <h2 style="text-decoration: underline">Installation</h2>
 <ul>
     <li>Run <code>pip install -r requirements.txt</code> to install dependencies needed to run the bot. If you don't have <code>os</code> or <code>asyncio</code> preinstalled in Python, run <code>pip install os asyncio</code></li>
